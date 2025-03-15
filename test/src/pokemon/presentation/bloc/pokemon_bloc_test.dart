@@ -204,7 +204,7 @@ void main() {
       const PokemonState(status: PokemonStateStatus.loading),
       const PokemonState(
         status: PokemonStateStatus.failure,
-        errorMessage: 'Unexpected Error',
+        errorMessage: 'Unexpected Erro',
       ),
     ],
     verify: (_) {
