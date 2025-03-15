@@ -1,0 +1,4 @@
+assets/
+ignored/
+.vscode/
+.dart_tool/

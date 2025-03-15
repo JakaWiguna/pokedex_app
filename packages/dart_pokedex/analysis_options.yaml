@@ -1,0 +1,14 @@
+include: package:lints/recommended.yaml
+
+linter:
+    rules:
+        - camel_case_types
+
+analyzer:
+    exclude:
+        - "**.g.dart"
+        - "**.freezed.dart"
+    errors:
+        missing_return: error
+        missing_required_param: error
+        invalid_annotation_target: ignore

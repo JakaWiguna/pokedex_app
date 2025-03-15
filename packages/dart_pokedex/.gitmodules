@@ -1,0 +1,3 @@
+[submodule "packages/dart_pokedex"]
+    path = packages/dart_pokedex
+    url = https://github.com/ThiDinh21/dart_pokedex.git
