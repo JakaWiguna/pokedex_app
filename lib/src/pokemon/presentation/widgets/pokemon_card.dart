@@ -89,7 +89,7 @@ class PokemonCard extends StatelessWidget {
   }
 
   Widget _buildPokemonNumber({required double width}) {
-    final pokemonNumberSize = width * 0.075;
+    final pokemonNumberSize = width * 0.13;
     return Positioned(
       top: 10,
       right: 14,
@@ -98,20 +98,20 @@ class PokemonCard extends StatelessWidget {
         style: TextStyle(
           fontSize: pokemonNumberSize,
           fontWeight: FontWeight.bold,
-          color: Colors.black26,
+          color: Colors.black.withValues(alpha: 0.1),
         ),
       ),
     );
   }
 
   Widget _buildCardContent({required Pokemon pokemon, required double height}) {
-    final pokemonNameSize = height * 0.085;
+    final pokemonNameSize = height * 0.13;
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.m,
-          AppSpacing.m,
+          AppSpacing.l,
           AppSpacing.m,
           AppSpacing.m,
         ),
@@ -129,7 +129,7 @@ class PokemonCard extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.xs),
+            const SizedBox(height: AppSpacing.s),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: pokemon.types.asMap().entries.map((entry) {

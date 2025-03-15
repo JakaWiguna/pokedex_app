@@ -9,7 +9,7 @@ extension IntExtensions on int {
   }
 
   // Number
-  String get pokenumber => '#${toString().padLeft(4, '0')}';
+  String get pokenumber => '#${toString().padLeft(3, '0')}';
 
   // Gender
   double get femaleRate => (this / 8.0) * 100.0;
