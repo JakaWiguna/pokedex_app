@@ -28,6 +28,9 @@ jobs:
         with:
           flutter-version: "3.27.2"
 
+      - name: Checkout submodules (If using submodules)
+        run: git submodule update --init --recursive
+
       - name: Install dependencies
         run: flutter pub get
 
