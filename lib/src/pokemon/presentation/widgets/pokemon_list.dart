@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pokedex_app/core/common/views/loading_page.dart';
@@ -46,6 +47,12 @@ class _PokemonListState extends State<PokemonList> {
           controller: _scrollController,
           slivers: [
             MovingTitleSliverAppBar(
+              systemUiOverlayStyle: const SystemUiOverlayStyle(
+                systemNavigationBarIconBrightness: Brightness.dark,
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness: Brightness.dark,
+                statusBarBrightness: Brightness.dark,
+              ),
               trailing: const Icon(
                 FontAwesomeIcons.list,
                 color: Colors.black,
@@ -61,7 +68,7 @@ class _PokemonListState extends State<PokemonList> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: (orientation == Orientation.portrait) ? 2 : 4,
                   childAspectRatio:
-                      (orientation == Orientation.portrait) ? 1.3 : 1.6,
+                      (orientation == Orientation.portrait) ? 1.35 : 1.6,
                   crossAxisSpacing: AppSpacing.s,
                   mainAxisSpacing: AppSpacing.s,
                 ),

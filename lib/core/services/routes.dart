@@ -1,28 +1,33 @@
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex_app/src/pokemon/presentation/views/pokemon_screen.dart';
+import 'package:pokedex_app/src/pokemon_detail/presentation/views/pokemon_detail_screen.dart';
 
 abstract class Routes {
   static GoRouter router = GoRouter(
+    initialLocation: '/',
     routes: [
       GoRoute(
         path: '/',
         name: 'pokemons',
-        builder: (_, __) => const PokemonScreen(),
-        //   routes: [
-        //     GoRoute(
-        //       path: 'detail/:id',
-        //       name: 'detail',
-        //       builder: (_, state) {
-        //         late int id;
-        //         try {
-        //           id = int.parse(state.pathParameters['id'] ?? '1');
-        //         } catch (_) {
-        //           id = 1;
-        //         }
-        //         return DetailPage(id: id);
-        //       },
-        //     ),
-        //   ],
+        pageBuilder: (context, state) => CupertinoPage(
+          key: state.pageKey,
+          child: const PokemonScreen(),
+        ),
+        routes: [
+          GoRoute(
+            path: 'detail/:id',
+            name: 'detail',
+            pageBuilder: (context, state) {
+              final id = int.tryParse(state.pathParameters['id'] ?? '1') ?? 1;
+
+              return CupertinoPage(
+                key: state.pageKey,
+                child: PokemonDetailScreen(id: id),
+              );
+            },
+          ),
+        ],
       ),
     ],
   );

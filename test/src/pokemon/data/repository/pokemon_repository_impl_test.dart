@@ -113,5 +113,91 @@ void main() {
       verify(() => mockPokemonEndpoint.getPage(limit: limit)).called(1);
       verifyNoMoreInteractions(mockPokemonEndpoint);
     });
+
+    test('should filter out null Pokemon when some API calls fail', () async {
+      // Arrange
+      const resourcePage = NamedAPIResourceList(
+        100,
+        null,
+        null,
+        [
+          NamedAPIResource('bulbasaur', 'https://pokeapi.co/api/v2/pokemon/1/'),
+          NamedAPIResource('missingno', 'https://pokeapi.co/api/v2/pokemon/0/'),
+        ],
+      );
+
+      const bulbasaur = Pokemon(
+        1,
+        'bulbasaur',
+        100,
+        10,
+        true,
+        10,
+        1,
+        [],
+        [],
+        [],
+        [],
+        '',
+        [],
+        [],
+        PokemonSprites(
+          '',
+          '',
+          null,
+          null,
+          '',
+          '',
+          null,
+          null,
+        ),
+        NamedAPIResource('species1', ''),
+        [],
+        [],
+      );
+
+      when(() => mockPokemonEndpoint.getPage(limit: limit))
+          .thenAnswer((_) async => resourcePage);
+
+      when(
+        () => mockPokemonEndpoint
+            .getByUrl('https://pokeapi.co/api/v2/pokemon/1/'),
+      ).thenAnswer((_) async => bulbasaur);
+
+      when(
+        () => mockPokemonEndpoint
+            .getByUrl('https://pokeapi.co/api/v2/pokemon/0/'),
+      ).thenThrow(Exception()); // Simulasi error saat fetch
+
+      // Act
+      final result = await repository.getPokemons(limit, offset);
+
+      // Assert
+      expect(result, isA<Right<Failure, List<Pokemon>>>());
+      expect(
+        result.getOrElse(() => []),
+        equals([bulbasaur]),
+      ); // Cek hanya bulbasaur yang tersisa
+      verify(() => mockPokemonEndpoint.getByUrl(any())).called(2);
+    });
+
+    test('should return a ServerFailure when an unexpected error occurs',
+        () async {
+      // Arrange
+      when(() => mockPokemonEndpoint.getPage(limit: limit))
+          .thenThrow(Exception('Unexpected error'));
+
+      // Act
+      final result = await repository.getPokemons(limit, offset);
+
+      // Assert
+      expect(result, isA<Left<Failure, List<Pokemon>>>());
+      expect(result.fold((l) => l, (r) => null), isA<ServerFailure>());
+      expect(
+        result.fold((l) => l as ServerFailure, (r) => null)!.message,
+        equals('Unexpected error: Exception: Unexpected error'),
+      );
+      verify(() => mockPokemonEndpoint.getPage(limit: limit)).called(1);
+    });
   });
 }

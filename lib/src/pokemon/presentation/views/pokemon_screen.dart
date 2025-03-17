@@ -31,11 +31,11 @@ class _PokemonScreenState extends State<PokemonScreen> {
           final status = state.status;
           if (state.firstPage) {
             if (status == PokemonStateStatus.loading) {
-              return const LoadingPage();
+              return _buildLoading();
             } else if (status == PokemonStateStatus.failure) {
               return _buildError();
             } else if (status == PokemonStateStatus.initial) {
-              return const SizedBox.shrink();
+              return _buildInit();
             }
           }
           return Stack(
@@ -62,6 +62,10 @@ class _PokemonScreenState extends State<PokemonScreen> {
       ),
     );
   }
+
+  Widget _buildInit() => const SizedBox.shrink();
+
+  Widget _buildLoading() => const LoadingPage();
 
   Widget _buildError() => ErrorPage(
         onTap: () =>

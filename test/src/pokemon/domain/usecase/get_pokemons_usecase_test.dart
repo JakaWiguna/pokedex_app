@@ -12,6 +12,10 @@ void main() {
   late GetPokemonsUseCase useCase;
   late MockPokemonRepository mockRepository;
 
+  setUpAll(() {
+    registerFallbackValue(GetPokemonParams(limit: 0, offset: 0));
+  });
+
   setUp(() {
     mockRepository = MockPokemonRepository();
     useCase = GetPokemonsUseCase(mockRepository);
@@ -51,10 +55,11 @@ void main() {
       [],
     ),
   );
+
   group('GetPokemonsUseCase', () {
     test(
-        'should return a list of Pokemon when '
-        'the repository call is successful', () async {
+        'should return a list of Pokemon when the repository call is successful',
+        () async {
       // Arrange
       when(() => mockRepository.getPokemons(params.limit, params.offset))
           .thenAnswer((_) async => Right(pokemons));
@@ -63,7 +68,8 @@ void main() {
       final result = await useCase(params);
 
       // Assert
-      expect(result, equals(Right<dynamic, List<Pokemon>>(pokemons)));
+      expect(result, isA<Right<Failure, List<Pokemon>>>());
+      expect(result.getOrElse(() => []), equals(pokemons));
       verify(() => mockRepository.getPokemons(params.limit, params.offset))
           .called(1);
       verifyNoMoreInteractions(mockRepository);
@@ -80,7 +86,8 @@ void main() {
       final result = await useCase(params);
 
       // Assert
-      expect(result, equals(Left<ServerFailure, dynamic>(failure)));
+      expect(result, isA<Left<Failure, List<Pokemon>>>());
+      expect(result.fold((l) => l, (r) => null), equals(failure));
       verify(() => mockRepository.getPokemons(params.limit, params.offset))
           .called(1);
       verifyNoMoreInteractions(mockRepository);

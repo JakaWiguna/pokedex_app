@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,6 +6,8 @@ import 'package:pokedex_app/core/utils/constants.dart';
 
 class MovingTitleSliverAppBar extends StatelessWidget {
   const MovingTitleSliverAppBar({
+    required this.systemUiOverlayStyle,
+    this.colorTitle = Colors.black,
     super.key,
     this.title = 'Pokedex',
     this.expandedHeight = kToolbarHeight + 48,
@@ -17,23 +18,22 @@ class MovingTitleSliverAppBar extends StatelessWidget {
     ),
     this.trailing,
     this.onTrailingPressed,
+    this.scrollOffset,
   });
   final String title;
+  final Color? colorTitle;
   final double expandedHeight;
   final double expandedFontSize;
   final Widget leading;
   final Widget? trailing;
   final VoidCallback? onTrailingPressed;
+  final double? scrollOffset;
+  final SystemUiOverlayStyle systemUiOverlayStyle;
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.dark,
-      ),
+      systemOverlayStyle: systemUiOverlayStyle,
       expandedHeight: expandedHeight,
       pinned: true,
       backgroundColor: Colors.transparent,
@@ -51,19 +51,26 @@ class MovingTitleSliverAppBar extends StatelessWidget {
           final safeAreaTop = MediaQuery.paddingOf(context).top;
           final minHeight = safeAreaTop + kToolbarHeight;
           final maxHeight = expandedHeight + safeAreaTop;
-          final percent =
+          final percent = scrollOffset ??
               (constraints.maxHeight - minHeight) / (maxHeight - minHeight);
 
           const startX = 28;
           const endX = startX + AppSpacing.s;
           final dx = startX + endX - endX * percent;
 
+          const startY = 80;
+          final endY = minHeight / 2;
+          final dy = startY + (endY - startY) * (1 - percent);
+
           return ColoredBox(
-            color: Colors.white.withValues(alpha: 1 - percent),
+            color: scrollOffset == null
+                ? Colors.white.withValues(alpha: 1 - percent)
+                : Colors.transparent,
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
                 Positioned(
+                  top: dy,
                   left: dx,
                   bottom: 12,
                   child: Text(
@@ -71,7 +78,7 @@ class MovingTitleSliverAppBar extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24 + (expandedFontSize - 24) * percent,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: colorTitle,
                     ),
                   ),
                 ),

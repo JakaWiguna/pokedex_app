@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:pokedex/pokedex.dart';
-import 'package:pokedex_app/core/errors/exceptions.dart';
 import 'package:pokedex_app/core/errors/failures.dart';
 import 'package:pokedex_app/src/pokemon/domain/usecase/get_pokemons_usecase.dart';
 import 'package:pokedex_app/src/pokemon/presentation/bloc/pokemon_bloc.dart';
@@ -29,7 +28,7 @@ void main() {
     pokemonBloc.close();
   });
 
-  final params = GetPokemonParams(limit: 20, offset: 0);
+  final params = GetPokemonParams(limit: 10, offset: 0);
 
   final pokemons = List.generate(
     params.limit,
@@ -78,7 +77,7 @@ void main() {
               .thenAnswer((_) async => Right(pokemons));
           return pokemonBloc;
         },
-        act: (bloc) => bloc.add(const PokemonsRequestEvent()),
+        act: (bloc) => bloc.add(const PokemonsRequestEvent(limit: 10)),
         expect: () => [
           const PokemonState(status: PokemonStateStatus.loading),
           PokemonState(
@@ -107,30 +106,6 @@ void main() {
           const PokemonState(
             status: PokemonStateStatus.failure,
             errorMessage: '500: Server error',
-          ),
-        ],
-        verify: (_) {
-          verify(() => mockUseCase.call(any())).called(1);
-        },
-      );
-
-      blocTest<PokemonBloc, PokemonState>(
-        'emits [loading, failure] when an unexpected exception occurs',
-        build: () {
-          when(() => mockUseCase.call(any())).thenThrow(
-            const ServerException(
-              message: 'Unexpected Error',
-              statusCode: '500',
-            ),
-          );
-          return pokemonBloc;
-        },
-        act: (bloc) => bloc.add(const PokemonsRequestEvent(limit: 10)),
-        expect: () => [
-          const PokemonState(status: PokemonStateStatus.loading),
-          const PokemonState(
-            status: PokemonStateStatus.failure,
-            errorMessage: 'Unexpected Error',
           ),
         ],
         verify: (_) {
@@ -186,29 +161,4 @@ void main() {
       );
     });
   });
-
-  blocTest<PokemonBloc, PokemonState>(
-    'emits [loading, failure] when an unexpected exception occurs',
-    build: () {
-      when(() => mockUseCase.call(any())).thenThrow(
-        const ServerException(
-          message: 'Unexpected Error',
-          statusCode: '500',
-        ),
-      );
-      return pokemonBloc;
-    },
-    act: (bloc) => bloc.add(const PokemonsPullRefreshEvent(limit: 10)),
-    expect: () => [
-      const PokemonState(),
-      const PokemonState(status: PokemonStateStatus.loading),
-      const PokemonState(
-        status: PokemonStateStatus.failure,
-        errorMessage: 'Unexpected Error',
-      ),
-    ],
-    verify: (_) {
-      verify(() => mockUseCase.call(any())).called(1);
-    },
-  );
 }

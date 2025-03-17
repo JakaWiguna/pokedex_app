@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pokedex_app/core/common/widgets/gradient_background.dart';
 import 'package:pokedex_app/core/res/media.dart';
 
 class PageUnderConstruction extends StatelessWidget {
@@ -10,9 +8,9 @@ class PageUnderConstruction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GradientBackground(
-        image: MediaRes.background,
-        child: Center(child: Lottie.asset(MediaRes.pageUnderConstruction)),
+      body: ColoredBox(
+        color: Colors.white,
+        child: Lottie.asset(MediaRes.pageUnderConstruction),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pokedex/pokedex.dart';
 import 'package:pokedex_app/core/common/widgets/badge_type.dart';
 import 'package:pokedex_app/core/extensions/int_extension.dart';
@@ -37,7 +38,10 @@ class PokemonCard extends StatelessWidget {
             child: Material(
               color: pokemon.types.first.color.secondary,
               child: InkWell(
-                onTap: () {},
+                onTap: () => context.pushNamed(
+                  'detail',
+                  pathParameters: {'id': pokemon.id.toString()},
+                ),
                 splashColor: Colors.white10,
                 highlightColor: Colors.white10,
                 child: Stack(
@@ -121,6 +125,8 @@ class PokemonCard extends StatelessWidget {
             Hero(
               tag: pokemon.name,
               child: Text(
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 pokemon.name.capitalize(),
                 style: TextStyle(
                   fontSize: pokemonNameSize,
