@@ -10,7 +10,12 @@ class PageUnderConstruction extends StatelessWidget {
     return Scaffold(
       body: ColoredBox(
         color: Colors.white,
-        child: Lottie.asset(MediaRes.pageUnderConstruction),
+        child: Center(
+          child: SizedBox(
+            height: 200,
+            child: Lottie.asset(MediaRes.pageUnderConstruction),
+          ),
+        ),
       ),
     );
   }

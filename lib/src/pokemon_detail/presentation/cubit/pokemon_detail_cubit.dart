@@ -15,24 +15,33 @@ class PokemonDetailCubit extends Cubit<PokemonDetailState> {
   }
 
   Future<void> getPokemon(int id) async {
-    emit(state.copyWith(status: PokemonDetailStateStatus.loading));
+    try {
+      emit(state.copyWith(status: PokemonDetailStateStatus.loading));
 
-    final result = await _useCase.call(GetPokemonDetailParams(id: id));
+      final result = await _useCase.call(GetPokemonDetailParams(id: id));
 
-    result.fold(
-      (failure) => emit(
+      result.fold(
+        (failure) => emit(
+          state.copyWith(
+            status: PokemonDetailStateStatus.failure,
+            errorMessage: failure.errorMessage,
+          ),
+        ),
+        (pokemon) => emit(
+          state.copyWith(
+            status: PokemonDetailStateStatus.success,
+            result: pokemon,
+          ),
+        ),
+      );
+    } catch (e) {
+      emit(
         state.copyWith(
           status: PokemonDetailStateStatus.failure,
-          errorMessage: failure.errorMessage,
+          errorMessage: e.toString(),
         ),
-      ),
-      (pokemon) => emit(
-        state.copyWith(
-          status: PokemonDetailStateStatus.success,
-          result: pokemon,
-        ),
-      ),
-    );
+      );
+    }
   }
 
   void toggleFavorite() {
