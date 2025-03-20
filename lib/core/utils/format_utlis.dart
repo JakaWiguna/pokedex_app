@@ -1,16 +1,14 @@
-String formatHeight(int meters) {
-  final inches = meters * 39.3701;
-  final feet = inches ~/ 12;
-  final remainingInches = inches % 12;
-  final formattedInches = remainingInches.toStringAsFixed(1);
-  final centimeters = (meters / 10).toStringAsFixed(2);
-  return '$feet\'$formattedInches" ($centimeters cm)';
+import 'package:pokedex_app/core/extensions/int_extension.dart';
+
+String formatHeight(int decimeters) {
+  final heightInCm = decimeters.cm;
+  final feetAndInches = heightInCm.cmToFeedAndInches();
+  final meters = decimeters.meter;
+  return '$feetAndInches (${meters.toStringAsFixed(2)} m)';
 }
 
-/// **Format Weight (Kg & Lbs)**
 String formatWeight(int hectograms) {
-  final kg = hectograms / 10;
-  final lbs = (kg * 2.20462).toStringAsFixed(1);
-
-  return '$lbs lbs ($kg kg)';
+  final kg = hectograms.kg;
+  final lbs = hectograms.lb;
+  return '${lbs.toStringAsFixed(1)} lbs (${kg.toStringAsFixed(1)} kg)';
 }

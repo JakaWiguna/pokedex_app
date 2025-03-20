@@ -21,17 +21,18 @@ class PokemonDetailPokemonImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageSize = isPortrait ? 200.0 : 150.0;
     return Positioned(
       top: screenHeight / 2 * (isPortrait ? 0.50 : 0.10),
-      left: screenWidth / 2 - (200 / 2),
+      left: screenWidth / 2 - (imageSize / 2),
       child: Opacity(
         opacity: (1 - slidePosition * 2).clamp(0.0, 1.0),
         child: Transform.translate(
-          offset: Offset(0, (isPortrait ? -200 : -20) * slidePosition),
+          offset: Offset(0, (isPortrait ? -imageSize : -20) * slidePosition),
           child: CachedNetworkImage(
             imageUrl: pokemon.id.thumbnailUrl,
-            width: 200,
-            height: 200,
+            width: imageSize,
+            height: imageSize,
             fit: BoxFit.contain,
           ),
         ),

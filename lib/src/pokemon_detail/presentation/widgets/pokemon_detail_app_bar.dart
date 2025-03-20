@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pokedex/pokedex.dart';
 import 'package:pokedex_app/core/common/widgets/app_bar.dart';
 import 'package:pokedex_app/core/extensions/string_extension.dart';
+import 'package:pokedex_app/src/pokemon_detail/presentation/common/pokemon_detail_colors.dart';
 
 class PokemonDetailAppBar extends StatelessWidget {
   const PokemonDetailAppBar({
@@ -28,16 +29,19 @@ class PokemonDetailAppBar extends StatelessWidget {
             statusBarColor: Colors.transparent,
             statusBarIconBrightness: Brightness.light,
           ),
-          leading: const Icon(FontAwesomeIcons.arrowLeft, color: Colors.white),
-          trailing: IconButton(
-            icon: Icon(
-              isFavorite ? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
-              color: isFavorite ? Colors.indigo.shade300 : Colors.white,
-            ),
-            onPressed: onFavoriteToggle,
+          leading: const Icon(
+            FontAwesomeIcons.arrowLeft,
+            color: PokemonDetailColors.appBarIconColor,
           ),
+          trailing: Icon(
+            isFavorite ? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
+            color: isFavorite
+                ? Colors.indigo.shade300
+                : PokemonDetailColors.favoriteIconColor,
+          ),
+          onTrailingPressed: onFavoriteToggle,
           title: pokemon.name.capitalize(),
-          colorTitle: Colors.white,
+          colorTitle: PokemonDetailColors.pokemonNameColor,
           scrollOffset: 1 - slidePosition,
         ),
       ],

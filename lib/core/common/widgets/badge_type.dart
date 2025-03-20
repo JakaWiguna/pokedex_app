@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pokedex_app/core/extensions/string_extension.dart';
 import 'package:pokedex_app/core/utils/constants.dart';
+import 'package:pokedex_app/src/pokemon/presentation/common/pokemon_dimensions.dart';
 
 class BadgeType extends StatelessWidget {
   const BadgeType({
@@ -28,7 +29,9 @@ class BadgeType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (diameter == 0.0) {
-      final pokemonTypeSize = height == null ? 12.0 : (height! * 0.075);
+      final pokemonTypeSize = height == null
+          ? 12.0
+          : (height! * PokemonDimensions.cardTypeTextSize);
       final textTheme = Theme.of(context).textTheme;
 
       return Container(

@@ -1,5 +1,7 @@
 extension IntExtensions on int {
   // Thumbnails URLs
+  //HybridShivam → Pokémon 001-904 (Generasi 1-8, resolusi kecil)
+  //PokéAPI → Pokémon 905+ (Generasi 9 ke atas, lebih lengkap).
   String get thumbnailUrl {
     final stringNumber = toString();
     if (this < 905) {

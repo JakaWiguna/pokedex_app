@@ -6,6 +6,7 @@ import 'package:pokedex_app/core/common/views/loading_page.dart';
 import 'package:pokedex_app/core/common/widgets/scaffold.dart';
 import 'package:pokedex_app/core/utils/constants.dart';
 import 'package:pokedex_app/src/pokemon/presentation/bloc/pokemon_bloc.dart';
+import 'package:pokedex_app/src/pokemon/presentation/common/pokemon_colors.dart';
 import 'package:pokedex_app/src/pokemon/presentation/widgets/pokemon_list.dart';
 
 class PokemonScreen extends StatefulWidget {
@@ -49,7 +50,7 @@ class _PokemonScreenState extends State<PokemonScreen> {
                 right: AppSpacing.l,
                 bottom: AppSpacing.l + safeAreaBottom,
                 child: FloatingActionButton(
-                  foregroundColor: Colors.white,
+                  foregroundColor: PokemonColors.cardTextColor,
                   backgroundColor: Colors.indigo.shade300,
                   onPressed: () {},
                   shape: const CircleBorder(),

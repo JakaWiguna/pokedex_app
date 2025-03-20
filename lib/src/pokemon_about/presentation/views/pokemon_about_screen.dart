@@ -5,7 +5,7 @@ import 'package:pokedex_app/core/common/views/error_page.dart';
 import 'package:pokedex_app/core/common/views/loading_page.dart';
 import 'package:pokedex_app/src/pokemon/presentation/common/pokemon_type_extension.dart';
 import 'package:pokedex_app/src/pokemon_about/presentation/cubit/pokemon_about_cubit.dart';
-import 'package:pokedex_app/src/pokemon_about/widgets/pokemon_about_content.dart';
+import 'package:pokedex_app/src/pokemon_about/presentation/widgets/pokemon_about_content.dart';
 
 class PokemonAboutScreen extends StatefulWidget {
   const PokemonAboutScreen({required this.pokemon, super.key});
