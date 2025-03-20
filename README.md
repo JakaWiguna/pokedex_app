@@ -6,10 +6,6 @@ A Flutter-based Pokedex application with clean architecture and REST API integra
 ![Dart Version](https://img.shields.io/badge/dart-3.6.1-blue)
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
 
-## 📱 App Screenshots
-
-[Screenshots will be added here]
-
 ## 🌟 Features
 
 - Display Pokemon list with infinite scrolling
@@ -17,7 +13,6 @@ A Flutter-based Pokedex application with clean architecture and REST API integra
 - Visualization of Pokemon base statistics
 - Detailed Pokemon information (height, weight, and more)
 - Modern and responsive UI
-- Support for light and dark themes
 
 ## 📚 Technology & Architecture
 
@@ -94,10 +89,6 @@ This application comes with comprehensive unit tests. To run the tests:
 ```bash
 flutter test
 ```
-
-## 📄 License
-
-[License will be added here]
 
 ## 🙏 Acknowledgements
 
