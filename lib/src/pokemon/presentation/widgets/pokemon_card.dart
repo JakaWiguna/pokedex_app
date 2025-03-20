@@ -7,6 +7,8 @@ import 'package:pokedex_app/core/extensions/int_extension.dart';
 import 'package:pokedex_app/core/extensions/string_extension.dart';
 import 'package:pokedex_app/core/res/media.dart';
 import 'package:pokedex_app/core/utils/constants.dart';
+import 'package:pokedex_app/src/pokemon/presentation/common/pokemon_colors.dart';
+import 'package:pokedex_app/src/pokemon/presentation/common/pokemon_dimensions.dart';
 import 'package:pokedex_app/src/pokemon/presentation/common/pokemon_type_extension.dart';
 
 class PokemonCard extends StatelessWidget {
@@ -22,7 +24,8 @@ class PokemonCard extends StatelessWidget {
 
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppSpacing.m),
+            borderRadius:
+                BorderRadius.circular(PokemonDimensions.cardBorderRadius),
             color: pokemon.types.first.color.secondary,
             boxShadow: [
               BoxShadow(
@@ -34,7 +37,8 @@ class PokemonCard extends StatelessWidget {
             ],
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(AppSpacing.m),
+            borderRadius:
+                BorderRadius.circular(PokemonDimensions.cardBorderRadius),
             child: Material(
               color: pokemon.types.first.color.secondary,
               child: InkWell(
@@ -42,8 +46,8 @@ class PokemonCard extends StatelessWidget {
                   'detail',
                   pathParameters: {'id': pokemon.id.toString()},
                 ),
-                splashColor: Colors.white10,
-                highlightColor: Colors.white10,
+                splashColor: PokemonColors.cardOverlayColor,
+                highlightColor: PokemonColors.cardOverlayColor,
                 child: Stack(
                   children: [
                     _buildPokeballDecoration(height: itemHeight),
@@ -61,7 +65,7 @@ class PokemonCard extends StatelessWidget {
   }
 
   Widget _buildPokeballDecoration({required double height}) {
-    final pokeballSize = height * 0.75;
+    final pokeballSize = height * PokemonDimensions.cardPokeballSize;
 
     return Positioned(
       bottom: -height * 0.13,
@@ -70,13 +74,13 @@ class PokemonCard extends StatelessWidget {
         image: const AssetImage(MediaRes.pokeball),
         width: pokeballSize,
         height: pokeballSize,
-        color: Colors.white.withValues(alpha: 0.14),
+        color: PokemonColors.cardPokeballColor,
       ),
     );
   }
 
   Widget _buildPokemon({required double height}) {
-    final pokemonSize = height * 0.70;
+    final pokemonSize = height * PokemonDimensions.cardPokemonImageSize;
 
     return Positioned(
       bottom: -2,
@@ -93,7 +97,7 @@ class PokemonCard extends StatelessWidget {
   }
 
   Widget _buildPokemonNumber({required double width}) {
-    final pokemonNumberSize = width * 0.13;
+    final pokemonNumberSize = width * PokemonDimensions.cardPokemonNumberSize;
     return Positioned(
       top: 10,
       right: 14,
@@ -102,14 +106,14 @@ class PokemonCard extends StatelessWidget {
         style: TextStyle(
           fontSize: pokemonNumberSize,
           fontWeight: FontWeight.bold,
-          color: Colors.black.withValues(alpha: 0.1),
+          color: PokemonColors.cardPokemonNumberColor,
         ),
       ),
     );
   }
 
   Widget _buildCardContent({required Pokemon pokemon, required double height}) {
-    final pokemonNameSize = height * 0.13;
+    final pokemonNameSize = height * PokemonDimensions.cardPokemonNameSize;
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
@@ -131,7 +135,7 @@ class PokemonCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: pokemonNameSize,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: PokemonColors.cardTextColor,
                 ),
               ),
             ),

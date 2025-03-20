@@ -6,6 +6,7 @@ import 'package:pokedex_app/core/common/views/loading_page.dart';
 import 'package:pokedex_app/core/common/widgets/app_bar.dart';
 import 'package:pokedex_app/core/utils/constants.dart';
 import 'package:pokedex_app/src/pokemon/presentation/bloc/pokemon_bloc.dart';
+import 'package:pokedex_app/src/pokemon/presentation/common/pokemon_constants.dart';
 import 'package:pokedex_app/src/pokemon/presentation/common/pokemon_strings.dart';
 import 'package:pokedex_app/src/pokemon/presentation/widgets/pokemon_card.dart';
 
@@ -66,9 +67,12 @@ class _PokemonListState extends State<PokemonList> {
               ),
               sliver: SliverGrid(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: (orientation == Orientation.portrait) ? 2 : 4,
-                  childAspectRatio:
-                      (orientation == Orientation.portrait) ? 1.35 : 1.6,
+                  crossAxisCount: (orientation == Orientation.portrait)
+                      ? PokemonConstants.gridCrossAxisCountPortrait
+                      : PokemonConstants.gridCrossAxisCountLandscape,
+                  childAspectRatio: (orientation == Orientation.portrait)
+                      ? PokemonConstants.gridCardAspectRatioPortrait
+                      : PokemonConstants.gridCardAspectRatioLandscape,
                   crossAxisSpacing: AppSpacing.s,
                   mainAxisSpacing: AppSpacing.s,
                 ),
@@ -150,7 +154,8 @@ class _PokemonListState extends State<PokemonList> {
     }
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
-    return currentScroll >= (maxScroll * 0.9);
+    return currentScroll >=
+        (maxScroll * PokemonConstants.scrollThresholdToLoadMore);
   }
 
   void _requestPokemons() {

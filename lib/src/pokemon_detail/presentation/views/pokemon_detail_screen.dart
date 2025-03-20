@@ -3,13 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_app/core/common/views/error_page.dart';
 import 'package:pokedex_app/core/common/views/loading_page.dart';
 import 'package:pokedex_app/src/pokemon_detail/presentation/cubit/pokemon_detail_cubit.dart';
-import 'package:pokedex_app/src/pokemon_detail/presentation/widgets/pokemon_detail_app_bar.dart';
-import 'package:pokedex_app/src/pokemon_detail/presentation/widgets/pokemon_detail_background.dart';
-import 'package:pokedex_app/src/pokemon_detail/presentation/widgets/pokemon_detail_dotted_decoration.dart';
-import 'package:pokedex_app/src/pokemon_detail/presentation/widgets/pokemon_detail_panel.dart';
-import 'package:pokedex_app/src/pokemon_detail/presentation/widgets/pokemon_detail_pokeball_decoration.dart';
-import 'package:pokedex_app/src/pokemon_detail/presentation/widgets/pokemon_detail_pokemon_image.dart';
-import 'package:pokedex_app/src/pokemon_detail/presentation/widgets/pokemon_detail_pokemon_info.dart';
+import 'package:pokedex_app/src/pokemon_detail/presentation/widgets/pokemon_detail_content.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PokemonDetailScreen extends StatefulWidget {
@@ -60,6 +54,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen>
         builder: (context, state) {
           final status = state.status;
           final pokemon = state.result;
+
           if (status == PokemonDetailStateStatus.loading) {
             return _buildLoading();
           } else if (status == PokemonDetailStateStatus.failure) {
@@ -67,50 +62,22 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen>
           } else if (status == PokemonDetailStateStatus.initial) {
             return _buildInit();
           }
-          return Stack(
-            children: [
-              PokemonDetailBackground(pokemon: pokemon),
-              PokemonDetailPokeballDecoration(
-                screenHeight: screenHeight,
-                isPortrait: isPortrait,
-                slidePosition: state.slidePosition,
-              ),
-              PokemonDetailDottedDecoration(
-                screenWidth: screenWidth,
-                screenHeight: screenHeight,
-                isPortrait: isPortrait,
-                slidePosition: state.slidePosition,
-              ),
-              PokemonDetailAppBar(
-                pokemon: pokemon,
-                isFavorite: state.isFavorite,
-                onFavoriteToggle: () =>
-                    context.read<PokemonDetailCubit>().toggleFavorite(),
-                slidePosition: state.slidePosition,
-              ),
-              PokemonDetailPokemonInfo(
-                screenWidth: screenWidth,
-                screenHeight: screenHeight,
-                appBarHeight: appBarHeight,
-                isPortrait: isPortrait,
-                pokemon: pokemon,
-                slidePosition: state.slidePosition,
-              ),
-              PokemonDetailPanel(
-                minHeight: panelMinHeight,
-                maxHeight: panelMaxHeight,
-                panelController: _panelController,
-                tabController: _tabController,
-                pokemon: pokemon,
-              ),
-              PokemonDetailPokemonImage(
-                screenWidth: screenWidth,
-                screenHeight: screenHeight,
-                isPortrait: isPortrait,
-                pokemon: pokemon,
-                slidePosition: state.slidePosition,
-              ),
-            ],
+
+          return PokemonDetailContent(
+            screenWidth: screenWidth,
+            screenHeight: screenHeight,
+            panelMinHeight: panelMinHeight,
+            panelMaxHeight: panelMaxHeight,
+            appBarHeight: appBarHeight,
+            isPortrait: isPortrait,
+            safeAreaTop: safeAreaTop,
+            pokemon: pokemon,
+            isFavorite: state.isFavorite,
+            slidePosition: state.slidePosition,
+            onFavoriteToggle: () =>
+                context.read<PokemonDetailCubit>().toggleFavorite(),
+            panelController: _panelController,
+            tabController: _tabController,
           );
         },
       ),

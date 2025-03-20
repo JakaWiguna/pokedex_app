@@ -3,6 +3,7 @@ import 'package:pokedex/pokedex.dart';
 import 'package:pokedex_app/core/extensions/int_extension.dart';
 import 'package:pokedex_app/core/extensions/string_extension.dart';
 import 'package:pokedex_app/core/utils/constants.dart';
+import 'package:pokedex_app/src/pokemon_detail/presentation/common/pokemon_detail_colors.dart';
 import 'package:pokedex_app/src/pokemon_detail/presentation/widgets/pokemon_detail_type_badge.dart';
 
 class PokemonDetailPokemonInfo extends StatelessWidget {
@@ -32,6 +33,7 @@ class PokemonDetailPokemonInfo extends StatelessWidget {
       child: Opacity(
         opacity: 1 - slidePosition,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Align(
               alignment: Alignment.topRight,
@@ -40,7 +42,7 @@ class PokemonDetailPokemonInfo extends StatelessWidget {
                 child: Text(
                   pokemon.id.pokenumber,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: PokemonDetailColors.pokemonIdColor,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
