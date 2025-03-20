@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pokedex_app/core/common/views/error_page.dart';
 import 'package:pokedex_app/core/common/views/loading_page.dart';
 import 'package:pokedex_app/core/common/widgets/scaffold.dart';
+import 'package:pokedex_app/core/utils/constants.dart';
 import 'package:pokedex_app/src/pokemon/presentation/bloc/pokemon_bloc.dart';
 import 'package:pokedex_app/src/pokemon/presentation/widgets/pokemon_list.dart';
 
@@ -44,10 +45,9 @@ class _PokemonScreenState extends State<PokemonScreen> {
                 onRefresh: _refreshPokemons,
                 child: const PokemonList(),
               ),
-              Container(
-                alignment: Alignment.bottomRight,
-                padding:
-                    EdgeInsets.only(right: 26, bottom: 26 + safeAreaBottom),
+              Positioned(
+                right: AppSpacing.l,
+                bottom: AppSpacing.l + safeAreaBottom,
                 child: FloatingActionButton(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.indigo.shade300,

@@ -63,7 +63,7 @@ void main() {
         final result = await useCase(GetPokemonDetailParams(id: tId));
 
         // assert
-        expect(result, equals(const Right(tPokemon)));
+        expect(result, equals(const Right<Failure, Pokemon>(tPokemon)));
         verify(() => mockRepository.getPokemon(tId)).called(1);
         verifyNoMoreInteractions(mockRepository);
       },
